@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/markula/tic-tac-toe/issues"
   },
-  "homepage": "https://github.com/markula/tic-tac-toe#readme"
+  "homepage": "https://github.com/markula/tic-tac-toe#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }

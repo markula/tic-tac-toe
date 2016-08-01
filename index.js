@@ -8,8 +8,28 @@ nunjucks.configure({
 });
 
 app.get('/', function(req, res) {
-  res.render('views/index.html');
+  res.render('views/index.html', {name: 'bob'});
 });
+
+//game moves
+// create
+// game page
+// make move
+
+//models
+// game model
+// row model
+
+//config
+// board squares
+
+//views
+// index.html
+// game.html
+// board.html
+// row.html
+// cell.html
+
 
 app.listen(3000, function () {
   console.log('listening on port 3000');

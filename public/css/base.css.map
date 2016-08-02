@@ -1,0 +1,10 @@
+{
+	"version": 3,
+	"sourceRoot": "/css/",
+	"file": "base.css",
+	"sources": [
+		"sass/base.scss"
+	],
+	"mappings": "AAAA,AAAA,EAAE,AAAC,CACD,KAAK,CAAE,GAAI,CACZ",
+	"names": []
+}

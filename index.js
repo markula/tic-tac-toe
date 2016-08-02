@@ -7,6 +7,8 @@ nunjucks.configure({
   express: app
 });
 
+app.use(express.static('public'));
+
 app.get('/', function(req, res) {
   res.render('views/index.html', {name: 'bob'});
 });

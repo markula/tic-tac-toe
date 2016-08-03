@@ -1,6 +1,8 @@
 const express = require('express');
-const nunjucks = require('nunjucks');
 const app = express();
+const http = require('http').Server(app);
+
+const nunjucks = require('nunjucks');
 
 nunjucks.configure({
   autoescape: true,
@@ -10,7 +12,38 @@ nunjucks.configure({
 app.use(express.static('public'));
 
 app.get('/', function(req, res) {
-  res.render('views/index.html', {name: 'bob'});
+  let tmpData = {
+    game: {
+      rows: [
+        {
+          id: 1,
+          cells: [
+            { id: 1, val: 1 },
+            { id: 2, val: 1 },
+            { id: 3, val: 0 }
+          ]
+        },
+        {
+          id: 2,
+          cells: [
+            { id: 1, val: 2 },
+            { id: 2, val: 0 },
+            { id: 3, val: 0 }
+          ]
+        },
+        {
+          id: 3,
+          cells: [
+            { id: 1, val: 0 },
+            { id: 2, val: 0 },
+            { id: 3, val: 0 }
+          ]
+        }
+      ]
+    }
+  };
+
+  res.render('views/index.html', tmpData);
 });
 
 //game moves

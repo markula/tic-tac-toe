@@ -11,10 +11,10 @@ module.exports = function(grunt) {
         tasks: [ 'sass:dev']
       },
       express: {
-        files:  [ '**/*.js', '**/*.scss', '**/*.html' ],
+        files:  [ '**/*.js' ],
         tasks:  [ 'express:dev' ],
         options: {
-          spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded
+          spawn: false
         }
       }
     },
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: 'public/css/sass',
-            src: ['**/*.scss', '!sass/modules/*.scss'],
+            src: ['!sass/modules/*.scss', '**/*.scss'],
             dest: 'public/css/',
             ext: '.css'
           }

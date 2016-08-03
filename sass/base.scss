@@ -1,3 +1,92 @@
-h1 {
-  color: red;
+$gray: #dedede;
+$font: Helvetica, sans-serif;
+
+body {
+  font-family: $font;
+}
+
+.page {
+  max-width: 800px;
+  margin: 10px auto;
+
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.menu {
+  width: 150px;
+  min-height: 400px;
+  border-right: 1px solid #000;
+  float: left;
+}
+
+.menu-title {
+  font-size: 40px;
+  line-height: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: $gray;
+}
+
+.menu-title-word {
+  padding: 5px 0;
+}
+
+//content
+.content {
+  float: left;
+  padding: 10px;
+  min-height: 400px;
+  width: 600px;
+}
+
+//board
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: no-wrap;
+  // justify-content: center;
+  align-items: center;
+
+  //make borders work
+  &:first-child {
+    .cell {
+      border-top: 0;
+    }
+  }
+
+  &:last-child {
+    .cell {
+      border-bottom: 0;
+    }
+  }
+
+  .cell:first-child {
+    border-left: 0;
+  }
+
+  .cell:last-child {
+    border-right: 0;
+  }
+}
+
+.cell {
+  border: 1px solid $gray;
+  min-height: 100px;
+  text-align: center;
+  line-height: 100px;
+  flex: 1 0 auto;
+  align-self: center;
+  cursor: pointer;
+}
+
+.cell-content {
+  margin: auto;
+  align-self: center;
 }

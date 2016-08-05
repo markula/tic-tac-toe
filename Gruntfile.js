@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         tasks: [ 'sass:dev']
       },
       requirejs: {
-        files: [ 'js/**/*.js' ],
+        files: [ '!js/build/**/*.js', 'js/**/*.js' ],
         tasks: [ 'requirejs:compile' ]
       },
       express: {

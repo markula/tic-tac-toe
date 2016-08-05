@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         tasks: [ 'sass:dev']
       },
       requirejs: {
-        files: [ '!js/build/**/*.js', 'js/**/*.js' ],
+        files: [ 'js/models/*.js', 'js/*.js', 'js/views/*.js' ],
         tasks: [ 'requirejs:compile' ]
       },
       express: {
@@ -28,6 +28,7 @@ module.exports = function(grunt) {
           baseUrl: 'js',
           skipDirOptimize: true,
           dir: 'public/js/build',
+          // out: 'public/js/build/main.js',
           optimizeAllPluginResources: true,
           mainConfigFile: 'js/mainConfig.js',
           preserveLicenseComments: true

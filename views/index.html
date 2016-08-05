@@ -38,11 +38,11 @@
 
       require.config({
         urlArgs: "",
-        baseUrl: "js/build"
+        baseUrl: "js"
       });
 
       require(['mainConfig'], function () {
-        require(['main']);
+        require(['build/main']);
       });
     </script>
   </body>

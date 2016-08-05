@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         tasks: [ 'sass:dev']
       },
       express: {
-        files:  [ '**/*.js' ],
+        files:  [ '**/*.html' ],
         tasks:  [ 'express:dev' ],
         options: {
           spawn: false

@@ -1,23 +1,26 @@
 $gray: #dedede;
+$med-gray: #777;
+$drk-gray: #555;
 $font: Helvetica, sans-serif;
 
 body {
   font-family: $font;
+  background: $gray;
+  height: 100%;
 }
 
 .clearfix {
   &:after {
     content: ' ';
+    display: block;
     visibility: hidden;
-    margin: 0;
-    padding: 0;
+    font-size: 0;
     height: 0;
     clear: both;
   }
 }
 
 .page {
-  max-width: 800px;
   margin: 10px auto;
 
   &:after {
@@ -40,23 +43,39 @@ body {
 .head-title {
   float: left;
   font-size: 40px;
-  // line-height: 32px;
   font-weight: bold;
   text-align: center;
-  color: $gray;
+  color: $drk-gray;
+}
+
+.menu-nav {
+  float: right;
+  margin: 15px 10px 0;
+}
+
+.menu-nav-item {
+  display: inline-block;
+  padding: 2px 5px;
+
+  a {
+    color: $drk-gray;
+    text-decoration: none;
+  }
 }
 
 //content
 .content {
-  float: left;
-  padding: 10px;
+  margin: 0 auto;
+  padding: 20px 10px;
   min-height: 400px;
-  width: 600px;
 }
 
 //board
 .row {
   text-align:center;
+  line-height: 0;
+  display: flex;
+  justify-content: center;
 
   &:first-child {
     .cell {
@@ -82,14 +101,18 @@ body {
 .cell {
   display: inline-block;
   border: 1px solid $gray;
+  background: #fff;
   height: 50px;
   width: 50px;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  vertical-align: middle;
   text-align: center;
   cursor: pointer;
 }
 
 .cell-content {
-  flex: 1 0 auto;
-  // margin: auto;
-  // align-self: center;
+  line-height: 50px;
+  // color: $drk-gray;
 }

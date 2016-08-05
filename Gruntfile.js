@@ -10,6 +10,10 @@ module.exports = function(grunt) {
         files: ['**/*.scss'],
         tasks: [ 'sass:dev']
       },
+      requirejs: {
+        files: [ 'js/**/*.js' ],
+        tasks: [ 'requirejs:compile' ]
+      },
       express: {
         files:  [ '**/*.html' ],
         tasks:  [ 'express:dev' ],
@@ -25,7 +29,7 @@ module.exports = function(grunt) {
           skipDirOptimize: true,
           dir: 'public/js/build',
           optimizeAllPluginResources: true,
-          mainConfigFile: 'public/js/mainConfig.js',
+          mainConfigFile: 'js/mainConfig.js',
           preserveLicenseComments: true
         }
       }
@@ -96,6 +100,7 @@ module.exports = function(grunt) {
     'clean',
     'symlink',
     'sass:dev',
+    'requirejs:compile',
     'express:dev',
     'watch'
   ]);

@@ -14,6 +14,7 @@ app.use(express.static('public'));
 app.get('/', function(req, res) {
   let tmpData = {
     game: {
+      id: '101',
       rows: [
         {
           id: 1,

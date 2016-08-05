@@ -1,14 +1,14 @@
 requirejs.config({
+  paths: {
+    'jquery': 'libs/jquery-3.1.0',
+    'underscore': 'libs/underscore',
+    'backbone': 'libs/backbone'
+  },
   modules: [
     {
       name: 'main'
     }
   ],
-  paths: {
-    'jquery': 'js/libs/jquery-3.1.0',
-    'underscore': 'js/libs/underscore',
-    'backbone': 'js/libs/backbone'
-  },
   shim: {
     'backbone': {
       deps: ['underscore', 'jquery'],

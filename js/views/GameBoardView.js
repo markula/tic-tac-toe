@@ -11,9 +11,18 @@ define(function() {
       console.log(this.model.attributes);
     },
 
+    makeMoveString: function(row, cell) {
+      return row + ':' + cell;
+    },
+
     handleCellClick: function(e) {
-      this.socket.emit('bob', { id: 1 });
-      console.log($(e.currentTarget));
+      var $el = $(e.currentTarget);
+
+      this.socket.emit(
+        'bob', 
+        { move: this.makeMoveString($el.parents('.row').attr('data-id'), $el.attr('data-id')) }
+      );
+      // console.log($(e.currentTarget));
     }
   });
 });

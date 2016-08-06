@@ -58,6 +58,7 @@ io.on('connection', (socket) => {
 
   socket.on('bob', (data) => {
     console.log(data);
+    socket.broadcast.emit('dodo', data);
   });
 });
 

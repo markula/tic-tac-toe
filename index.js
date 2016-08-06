@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
-
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const nunjucks = require('nunjucks');
 
 nunjucks.configure({
@@ -11,7 +11,7 @@ nunjucks.configure({
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   let tmpData = {
     game: {
       id: '101',
@@ -47,6 +47,20 @@ app.get('/', function(req, res) {
   res.render('views/index.html', tmpData);
 });
 
+server.listen(3000, function () {
+  console.log('listening on port 8080');
+});
+
+io.on('connection', (socket) => {
+  console.log('user connected');
+
+  socket.emit('dodo', { youAre: 'turd sandwich' })
+
+  socket.on('bob', (data) => {
+    console.log(data);
+  });
+});
+
 //game moves
 // create
 // game page
@@ -65,8 +79,3 @@ app.get('/', function(req, res) {
 // board.html
 // row.html
 // cell.html
-
-
-app.listen(3000, function () {
-  console.log('listening on port 3000');
-});

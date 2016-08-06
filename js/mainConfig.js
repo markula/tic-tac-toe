@@ -2,11 +2,13 @@ requirejs.config({
   paths: {
     'jquery': 'libs/jquery-3.1.0',
     'underscore': 'libs/underscore',
-    'backbone': 'libs/backbone'
+    'backbone': 'libs/backbone',
+    'socket.io': 'libs/socket.io-1.4.5'
   },
   modules: [
     {
-      name: 'main'
+      name: 'main',
+      "insertRequire": ['main']
     }
   ],
   shim: {

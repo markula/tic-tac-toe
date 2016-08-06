@@ -1,5 +1,4 @@
 define(function() {
-  console.log('bob');
   var Backbone = require('backbone');
 
   return Backbone.View.extend({
@@ -7,11 +6,13 @@ define(function() {
       'click .cell': 'handleCellClick'
     },
 
-    initialize: function() {
+    initialize: function(options) {
+      this.socket = options.socket;
       console.log(this.model.attributes);
     },
 
     handleCellClick: function(e) {
+      this.socket.emit('bob', { id: 1 });
       console.log($(e.currentTarget));
     }
   });

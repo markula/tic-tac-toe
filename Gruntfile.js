@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         tasks: [ 'requirejs:compile' ]
       },
       express: {
-        files:  [ '**/*.html' ],
+        files:  [ '**/*.html', 'index.js', 'server/**/*.js' ],
         tasks:  [ 'express:dev' ],
         options: {
           spawn: false

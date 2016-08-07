@@ -17,6 +17,7 @@ define(function() {
 
     handleCellClick: function(e) {
       var $el = $(e.currentTarget);
+      $.post('/game/create', {boardSize: 3});
 
       this.socket.emit(
         'bob', 

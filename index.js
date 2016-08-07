@@ -3,6 +3,17 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const nunjucks = require('nunjucks');
+const Game = require('./server/Game');
+const jsonfile = require('jsonfile');
+const bodyParser = require('body-parser');
+
+//post request data stuff
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+
 
 nunjucks.configure({
   autoescape: true,
@@ -12,42 +23,34 @@ nunjucks.configure({
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  let tmpData = {
-    game: {
-      id: '101',
-      rows: [
-        {
-          id: 1,
-          cells: [
-            { id: 1, val: 1 },
-            { id: 2, val: 1 },
-            { id: 3, val: 0 }
-          ]
-        },
-        {
-          id: 2,
-          cells: [
-            { id: 1, val: 2 },
-            { id: 2, val: 0 },
-            { id: 3, val: 0 }
-          ]
-        },
-        {
-          id: 3,
-          cells: [
-            { id: 1, val: 0 },
-            { id: 2, val: 0 },
-            { id: 3, val: 0 }
-          ]
-        }
-      ]
-    }
-  };
+  let game = new Game({ boardSize: 3 });
+  console.log(game);
+
+  let tmpData = { game: game };
 
   res.render('views/index.html', tmpData);
 });
 
-server.listen(3000, function () {
+//GAME
+//create
+app.post('/game/create', (req, res) => {
+  let game = new Game(req.body);
+  let fileName = `/games/${game.id}.json`;
+
+  jsonfile.writeFile(fileName, game, function() {
+    console.log(`wrote game: ${fileName}`);
+  });
+
+  console.log(game);
+  // res.redirect('/game/'+game.id+'/'+game.player1Id);
+});
+
+//view game
+app.get('/game/:gameId/:userId', (req, res) => {
+
+});
+
+server.listen(3000, () => {
   console.log('listening on port 8080');
 });
 

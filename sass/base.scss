@@ -70,6 +70,44 @@ body {
   min-height: 400px;
 }
 
+//create form
+.home-content{
+  width: 600px;
+  margin: 20px auto;
+}
+
+.create-form {
+  width: 100%;
+}
+
+.field {
+  padding: 10px;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    color: $med-gray;
+  }
+}
+
+.field-lbl {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.actions {
+  text-align: right;
+
+  button {
+    padding: 10px;
+    background: blue;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
 //board
 .row {
   text-align:center;
@@ -115,4 +153,20 @@ body {
 .cell-content {
   line-height: 50px;
   // color: $drk-gray;
+}
+
+//404
+.error-content {
+  width: 600px;
+  margin: 20px auto;
+
+  h2 {
+    font-size: 24px;
+    color: $med-gray;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 16px;
+  }
 }

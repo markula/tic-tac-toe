@@ -1,5 +1,7 @@
 const crypto = require('crypto');
 const _ = require('lodash');
+const Promise = require('bluebird');
+const jsonfile = require('jsonfile');
 
 const Game = function(gData) {
   this.boardSize = _.get(gData, 'boardSize', 3);
@@ -32,6 +34,22 @@ Game.prototype.createRow = function(id) {
     i++;
   }
   return row;
+}
+
+Game.prototype.saveGame = function() {
+  let fileName = `/tmp/${this.id}.json`;
+  console.log('saving game');
+
+  return new Promise((resolve, reject) => {
+    jsonfile.writeFile(fileName, this, (err, stats) => {
+      if(err) {
+        // console.log('err', err);
+        reject(err);
+      } else {
+        resolve(stats);
+      }
+    });
+  });
 }
 
 module.exports = Game;

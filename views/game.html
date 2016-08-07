@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+  </head>
+  <body>
+    <div class="page">
+      <div class="head clearfix">
+        <h1 class="head-title">tic tac toe</h1>
+        <ul class="menu-nav">
+          <li class="menu-nav-item"><a href="/">home</a></li>
+        </ul>
+      </div>
+      <div class="content">
+        <div class="board">
+          {% for row in game.rows %}
+            <div class="row" data-id="{{ row.id }}">
+              {% for cell in row.cells %}
+                <div class="cell" data-id="{{ cell.id }}">
+                  <span class="cell-content">
+                    {% if cell.val == 1 %}
+                      X
+                    {% elif cell.val == 2 %}
+                      O
+                    {% endif %}
+                  </span>
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="/js/libs/require.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var gameData = {{ game|dump|safe }};
+
+      require.config({
+        urlArgs: "",
+        baseUrl: "/js"
+      });
+
+      require(['mainConfig'], function () {
+        require(['build/main']);
+      });
+    </script>
+  </body>
+</html>

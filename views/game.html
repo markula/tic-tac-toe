@@ -13,18 +13,20 @@
         </ul>
       </div>
       <div class="content">
-        {% if playerId == 1 %}
-          <div class="game-info">
+        <div class="game-info"> 
+
+          {% if playerId == 1 %}
             <p>share url: <strong class="drk-gray">/game/{{game.id}}/2</strong></p>
-            <h3 class="game-status" {% if game.winData.winner == false %}style="display: none;"{% endif %}>
-              {% if game.winData.pId == playerId %}
-                you win
-              {% else %}
-                you lose
-              {% endif %}
-            </h3>
-          </div>
-        {% endif %}
+          {% endif %}
+
+          <h3 class="game-status" {% if game.winData.winner == 'true' %}style="display: none;"{% endif %}>
+            {% if game.winData.pId == playerId %}
+              you win
+            {% else %}
+              you lose
+            {% endif %}
+          </h3>
+        </div>
         <div class="board">
           {% for row in game.rows %}
             <div class="row row{{ row.id }}" data-id="{{ row.id }}">

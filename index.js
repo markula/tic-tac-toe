@@ -98,7 +98,7 @@ io
 
         console.log(winData);
 
-        if(winData.winner) {
+        if(winData.pId === game.pId) {
           socket.emit('gameWon');
           socket.broadcast.emit('gameOver');
         }

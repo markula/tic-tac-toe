@@ -3,18 +3,13 @@ const _ = require('lodash');
 const Promise = require('bluebird');
 const jsonfile = require('jsonfile');
 
-const defaultWinData = {
-  winner: false,
-  pId: 0
-}
-
 const Game = function(gData) {
   this.boardSize = _.get(gData, 'boardSize', 3);
   this.pId = _.get(gData, 'pId', 1);
   this.id = _.get(gData, 'id', this.generateId());
   this.rows = _.get(gData, 'rows', this.createRows());
   this.moves = _.get(gData, 'moves', []);
-  this.winData = _.get(gData, 'winData', _.clone(defaultWinData));
+  this.winData = _.get(gData, 'winData', this.getDefaultWinData());
   return this;
 }
 
@@ -83,15 +78,15 @@ Game.prototype.makeMove = function(move) {
   let row = +move.row - 1;
   let cell = +move.cell - 1;
 
-  // console.log(that.winData);
+  console.log(that.winData);
 
   return new Promise((resolve, reject) => {
     if(that.userCanMove(move) 
-       && that.winData.pId === 0
+       && !that.winData.winner
        && that.rows[row].cells[cell].val === 0) {
       that.rows[row].cells[cell].val = pId;
       that.moves.push(move);
-      that.checkForWin();
+      that.winData = that.checkForWin();
       that.saveGame();
       resolve(that.winData);
     } else {
@@ -101,23 +96,34 @@ Game.prototype.makeMove = function(move) {
 }
 
 // validation
+Game.prototype.getDefaultWinData = function() {
+  return {
+    winner: false,
+    pId: 0
+  }
+}
+
 Game.prototype.checkForWin = function() {
   let p1val = this.boardSize;
   let p2val = this.boardSize * 2;
-  console.log(p1val, p2val);
-  let winData = _.clone(defaultWinData);
+  let winData = {};
   //rows
-  winData = _.assignIn(winData, this.checkRowsForWin(p1val, p2val));
+  winData = this.checkRowsForWin(p1val, p2val);
+  console.log(this.checkRowsForWin(p1val, p2val));
+  if(winData.winner) { return winData }
   //cols
-  winData = _.assignIn(winData, this.checkColsForWin(p1val, p2val));
+  winData = this.checkColsForWin(p1val, p2val);
+  console.log(this.checkColsForWin(p1val, p2val));
+  if(winData.winner) { return winData }
   //diagonal
-  winData = _.assignIn(winData, this.checkDiagonalsForWin(p1val, p2val));
+  winData = this.checkDiagonalsForWin(p1val, p2val);
+  console.log(this.checkDiagonalsForWin(p1val, p2val));
 
   return winData;
 }
 
 Game.prototype.checkRowsForWin = function(p1, p2) {
-  let winData = {};
+  let winData = this.winData;
 
   _.forEach(this.rows, (row) => {
     let cellCount = 0;
@@ -129,20 +135,18 @@ Game.prototype.checkRowsForWin = function(p1, p2) {
     });
 
     if(rowSum === p1 && cellCount === this.boardSize) {
-      winData = _.assignIn(defaultWinData, { winner: true, pId: 1 });
-      return false;
+      winData = { winner: true, pId: 1 };
     } else if (rowSum === p2) {
-      winData = _.assignIn(defaultWinData, { winner: true, pId: 2 });
-      return false;
+      winData = { winner: true, pId: 2 };
     }
   });
 
-  return {};
+  return winData;
 }
 
 Game.prototype.checkColsForWin = function(p1, p2) {
   let i = 0;
-  let winData = {};
+  let winData = this.winData;
 
   while (i < this.boardSize) {
     let cellCount = 0;
@@ -154,10 +158,10 @@ Game.prototype.checkColsForWin = function(p1, p2) {
     });
 
     if(colSum === p1 && cellCount === this.boardSize) {
-      winData = _.assignIn(defaultWinData, { winner: true, pId: 1 });
+      winData = { winner: true, pId: 1 };
       break;
     } else if (colSum === p2) {
-      winData = _.assignIn(defaultWinData, { winner: true, pId: 2 });
+      winData = { winner: true, pId: 2 };
       break;
     }
 
@@ -172,7 +176,7 @@ Game.prototype.checkDiagonalsForWin = function(p1, p2) {
   let bUp = 0;
   let tDownCount = 0;
   let bUpCount = 0;
-  let winData = {};
+  let winData = this.winData;
   let that = this;
 
   _.forEach(this.rows, (row) => {
@@ -188,9 +192,9 @@ Game.prototype.checkDiagonalsForWin = function(p1, p2) {
   });
 
   if(tDown === p1 || bUp === p1 && (tDownCount === this.boardSize || bUpCount === this.boardSize)) {
-    winData = _.assignIn(defaultWinData, { winner: true, pId: 1 });
+    winData = { winner: true, pId: 1 };
   } else if (tDown === p2 || bUp === p2) {
-    winData = _.assignIn(defaultWinData, { winner: true, pId: 2 });
+    winData = { winner: true, pId: 2 };
   }
 
   return winData;

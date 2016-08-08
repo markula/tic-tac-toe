@@ -5,10 +5,7 @@ const jsonfile = require('jsonfile');
 
 const defaultWinData = {
   winner: false,
-  row: null,
-  col: null,
-  pId: 0,
-  diagSelector: ''
+  pId: 0
 }
 
 const Game = function(gData) {
@@ -94,6 +91,7 @@ Game.prototype.makeMove = function(move) {
        && that.rows[row].cells[cell].val === 0) {
       that.rows[row].cells[cell].val = pId;
       that.moves.push(move);
+      that.checkForWin();
       that.saveGame();
       resolve(that.winData);
     } else {
@@ -106,6 +104,7 @@ Game.prototype.makeMove = function(move) {
 Game.prototype.checkForWin = function() {
   let p1val = this.boardSize;
   let p2val = this.boardSize * 2;
+  console.log(p1val, p2val);
   let winData = _.clone(defaultWinData);
   //rows
   winData = _.assignIn(winData, this.checkRowsForWin(p1val, p2val));
@@ -128,8 +127,6 @@ Game.prototype.checkRowsForWin = function(p1, p2) {
       }
       return cell.val 
     });
-
-    console.log(rowSum, cellCount);
 
     if(rowSum === p1 && cellCount === this.boardSize) {
       winData = _.assignIn(defaultWinData, { winner: true, pId: 1 });

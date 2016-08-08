@@ -19,7 +19,7 @@
             <p>share url: <strong class="drk-gray">/game/{{game.id}}/2</strong></p>
           {% endif %}
 
-          <h3 class="game-status" {% if game.winData.winner == 'true' %}style="display: none;"{% endif %}>
+          <h3 class="game-status" {% if game.winData.winner == false %}style="display: none;"{% endif %}>
             {% if game.winData.pId == playerId %}
               you win
             {% else %}

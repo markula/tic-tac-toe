@@ -96,9 +96,7 @@ io
         socket.emit('moveSuccess', move);
         socket.broadcast.emit('gameMove', move);
 
-        console.log(winData);
-
-        if(winData.pId === game.pId) {
+        if(+winData.pId === game.pId) {
           socket.emit('gameWon');
           socket.broadcast.emit('gameOver');
         }

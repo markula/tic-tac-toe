@@ -78,8 +78,6 @@ Game.prototype.makeMove = function(move) {
   let row = +move.row - 1;
   let cell = +move.cell - 1;
 
-  console.log(that.winData);
-
   return new Promise((resolve, reject) => {
     if(that.userCanMove(move) 
        && !that.winData.winner
@@ -109,21 +107,18 @@ Game.prototype.checkForWin = function() {
   let winData = {};
   //rows
   winData = this.checkRowsForWin(p1val, p2val);
-  console.log(this.checkRowsForWin(p1val, p2val));
   if(winData.winner) { return winData }
   //cols
   winData = this.checkColsForWin(p1val, p2val);
-  console.log(this.checkColsForWin(p1val, p2val));
   if(winData.winner) { return winData }
   //diagonal
   winData = this.checkDiagonalsForWin(p1val, p2val);
-  console.log(this.checkDiagonalsForWin(p1val, p2val));
 
   return winData;
 }
 
 Game.prototype.checkRowsForWin = function(p1, p2) {
-  let winData = this.winData;
+  let winData = _.cloneDeep(this.winData);
 
   _.forEach(this.rows, (row) => {
     let cellCount = 0;
@@ -146,7 +141,7 @@ Game.prototype.checkRowsForWin = function(p1, p2) {
 
 Game.prototype.checkColsForWin = function(p1, p2) {
   let i = 0;
-  let winData = this.winData;
+  let winData = _.cloneDeep(this.winData);
 
   while (i < this.boardSize) {
     let cellCount = 0;
@@ -176,7 +171,7 @@ Game.prototype.checkDiagonalsForWin = function(p1, p2) {
   let bUp = 0;
   let tDownCount = 0;
   let bUpCount = 0;
-  let winData = this.winData;
+  let winData = _.cloneDeep(this.winData);
   let that = this;
 
   _.forEach(this.rows, (row) => {

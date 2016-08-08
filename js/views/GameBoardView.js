@@ -37,7 +37,7 @@ define(function() {
     },
 
     renderGameStatus: function(message) {
-      this.$el.find('.game-status').show().html(message);
+      $('.game-status').show().html(message);
     },
 
     makeMove: function(move) {

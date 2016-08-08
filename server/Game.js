@@ -58,8 +58,6 @@ Game.prototype.addMove = function(move) {
 }
 
 Game.prototype.userCanMove = function(move) {
-  console.log(this.moves);
-
   if(!this.moves.length) {
     return +move.pId === 1;
   }

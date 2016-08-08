@@ -16,6 +16,7 @@ define(function() {
 
       this.socket.on('gameMove', function(move) {
         that.makeMove(move);
+        that.socket.emit('gameMove', move);
       });
 
       this.socket.on('moveSuccess', function(move) {

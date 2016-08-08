@@ -103,7 +103,9 @@ io
   });
 
   socket.on('gameMove', (move) => {
-    game.addMove(move);
+    if(move.gId === game.id) {
+      game.addMove(move);
+    }
   });
 });
 

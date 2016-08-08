@@ -5,8 +5,10 @@ const jsonfile = require('jsonfile');
 
 const Game = function(gData) {
   this.boardSize = _.get(gData, 'boardSize', 3);
+  this.pId = _.get(gData, 'pId', 1);
   this.id = _.get(gData, 'id', this.generateId());
   this.rows = _.get(gData, 'rows', this.createRows());
+  this.moves = _.get(gData, 'moves', []);
   return this;
 }
 
@@ -38,12 +40,11 @@ Game.prototype.createRow = function(id) {
 
 Game.prototype.saveGame = function() {
   let fileName = `/tmp/${this.id}.json`;
-  console.log('saving game');
 
   return new Promise((resolve, reject) => {
-    jsonfile.writeFile(fileName, this, (err, stats) => {
+    let gameData = _.omit(this, 'pId');
+    jsonfile.writeFile(fileName, gameData, (err, stats) => {
       if(err) {
-        // console.log('err', err);
         reject(err);
       } else {
         resolve(stats);
@@ -51,5 +52,43 @@ Game.prototype.saveGame = function() {
     });
   });
 }
+
+Game.prototype.addMove = function(move) {
+  this.moves.push(move);
+}
+
+Game.prototype.userCanMove = function(move) {
+  console.log(this.moves);
+
+  if(!this.moves.length) {
+    return +move.pId === 1;
+  }
+
+  let lastMove = this.moves[this.moves.length - 1];
+  return +lastMove.pId !== +move.pId;
+}
+
+Game.prototype.makeMove = function(move) {
+  let that = this;
+  let pId = +move.pId;
+  let row = +move.row - 1;
+  let cell = +move.cell - 1;
+
+  return new Promise((resolve, reject) => {
+    if(that.userCanMove(move) 
+       && that.rows[row].cells[cell].val === 0) {
+
+      that.rows[row].cells[cell].val = pId;
+      that.moves.push(move);
+      that.saveGame();
+      resolve();
+    } else {
+      reject({ message: 'invalid move', move: move });
+    }
+  });
+}
+
+// validation
+Game.prototype.isValidMove
 
 module.exports = Game;

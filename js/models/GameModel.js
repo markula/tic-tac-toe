@@ -4,7 +4,9 @@ define(function(require) {
   return Backbone.Model.extend({
     defaults: {
       id: '',
-      rows: []
+      pId: 1,
+      rows: [],
+      moves: []
     }
   })
 });

@@ -13,11 +13,16 @@
         </ul>
       </div>
       <div class="content">
+        {% if playerId == 1 %}
+          <div class="game-info">
+            share url: <strong class="drk-gray">/game/{{game.id}}/2</strong>
+          </div>
+        {% endif %}
         <div class="board">
           {% for row in game.rows %}
-            <div class="row" data-id="{{ row.id }}">
+            <div class="row row{{ row.id }}" data-id="{{ row.id }}">
               {% for cell in row.cells %}
-                <div class="cell" data-id="{{ cell.id }}">
+                <div class="cell cell{{ cell.id }}" data-id="{{ cell.id }}" {% if cell.val > 0 %}data-nomove="true"{% endif %}>
                   <span class="cell-content">
                     {% if cell.val == 1 %}
                       X

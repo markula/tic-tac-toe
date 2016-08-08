@@ -8,22 +8,56 @@ define(function() {
 
     initialize: function(options) {
       this.socket = options.socket;
-      console.log(this.model.attributes);
+      this.attachSocketListeners();
     },
 
-    makeMoveString: function(row, cell) {
-      return row + ':' + cell;
+    attachSocketListeners: function() {
+      var that = this;
+
+      this.socket.on('gameMove', function(move) {
+        that.makeMove(move);
+      });
+
+      this.socket.on('moveSuccess', function(move) {
+        that.model.get('moves').push(move);
+      });
+
+      this.socket.on('moveError', function(move) {
+        that.removeErrMove(move);
+      });
+    },
+
+    makeMove: function(move) {
+      //update model
+      this.model.set('rows['+move.row+'].cells['+move.cell+'].val', move.pId);
+      //update cell
+      this.renderMadeMove(move);
+    },
+
+    renderMadeMove: function(move) {
+      var $cell = this.$el.find('.row'+move.row+' .cell'+move.cell);
+      var cellText = move.pId === 1 ? 'X' : 'O';
+      $cell.attr('data-nomove', true);
+      $cell.find('.cell-content').html(cellText);
+    },
+
+    removeErrMove: function(move) {
+      var $cell = this.$el.find('.row'+move.row+' .cell'+move.cell);
+      $cell.attr('data-nomove', null);
+      $cell.find('.cell-content').html('');
     },
 
     handleCellClick: function(e) {
       var $el = $(e.currentTarget);
-      $.post('/game/create', {boardSize: 3, id: this.model.get('id')});
+      var move = {
+        gId: this.model.get('id'),
+        pId: this.model.get('pId'),
+        row: $el.parents('.row').attr('data-id'),
+        cell: $el.attr('data-id')
+      }
 
-      this.socket.emit(
-        'bob', 
-        { move: this.makeMoveString($el.parents('.row').attr('data-id'), $el.attr('data-id')) }
-      );
-      // console.log($(e.currentTarget));
+      this.renderMadeMove(move);
+      this.socket.emit('makeMove', move);
     }
   });
 });

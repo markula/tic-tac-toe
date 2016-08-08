@@ -3,10 +3,24 @@ $med-gray: #777;
 $drk-gray: #555;
 $font: Helvetica, sans-serif;
 
+* {
+  &:after,
+  &:before {
+    box-sizing: border-box;
+  }
+
+  box-sizing: border-box;
+}
+
 body {
   font-family: $font;
+  color: $med-gray;
   background: $gray;
   height: 100%;
+}
+
+strong {
+  font-weight: bold;
 }
 
 .clearfix {
@@ -18,6 +32,10 @@ body {
     height: 0;
     clear: both;
   }
+}
+
+.drk-gray {
+  color: $drk-gray;
 }
 
 .page {
@@ -72,7 +90,7 @@ body {
 
 //create form
 .home-content{
-  width: 600px;
+  max-width: 600px;
   margin: 20px auto;
 }
 
@@ -106,6 +124,13 @@ body {
     color: #fff;
     cursor: pointer;
   }
+}
+
+//game
+.game-info {
+  width: 600px;
+  font-size: 14px;
+  margin: 0 auto 15px;
 }
 
 //board

@@ -15,11 +15,9 @@ define(function(require) {
     var io = require('socket.io');
 
     $(document).ready(function() {
-      var socket = io.connect(window.location.origin);
-
-      socket.emit('bob', { text: 'jomama' });
-      socket.on('dodo', function(data) {
-        console.log(data);
+      var socket = io.connect(window.location.origin+'/game');
+      socket.on('connect', function() {
+        socket.emit('initGame', gameData);
       });
 
       var gameBoardView = new GameBoardView({

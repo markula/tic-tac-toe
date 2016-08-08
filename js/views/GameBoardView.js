@@ -26,6 +26,18 @@ define(function() {
       this.socket.on('moveError', function(move) {
         that.removeErrMove(move);
       });
+
+      this.socket.on('gameWon', function() {
+        that.renderGameStatus('you win');
+      });
+
+      this.socket.on('gameOver', function() {
+        that.renderGameStatus('you lose');
+      });
+    },
+
+    renderGameStatus: function(message) {
+      this.$el.find('.game-status').show().html(message);
     },
 
     makeMove: function(move) {
@@ -50,15 +62,18 @@ define(function() {
 
     handleCellClick: function(e) {
       var $el = $(e.currentTarget);
-      var move = {
-        gId: this.model.get('id'),
-        pId: this.model.get('pId'),
-        row: $el.parents('.row').attr('data-id'),
-        cell: $el.attr('data-id')
-      }
 
-      this.renderMadeMove(move);
-      this.socket.emit('makeMove', move);
+      if(!$el.attr('data-nomove')) {   
+        var move = {
+          gId: this.model.get('id'),
+          pId: this.model.get('pId'),
+          row: $el.parents('.row').attr('data-id'),
+          cell: $el.attr('data-id')
+        }
+
+        this.renderMadeMove(move);
+        this.socket.emit('makeMove', move); 
+      }
     }
   });
 });

@@ -15,7 +15,14 @@
       <div class="content">
         {% if playerId == 1 %}
           <div class="game-info">
-            share url: <strong class="drk-gray">/game/{{game.id}}/2</strong>
+            <p>share url: <strong class="drk-gray">/game/{{game.id}}/2</strong></p>
+            <h3 class="game-status" {% if game.winData.winner == false %}style="display: none;"{% endif %}>
+              {% if game.winData.pId == playerId %}
+                you win
+              {% else %}
+                you lose
+              {% endif %}
+            </h3>
           </div>
         {% endif %}
         <div class="board">

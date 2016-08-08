@@ -92,11 +92,19 @@ io
     if(move.gId === game.id) {
       game
       .makeMove(move)
-      .then(() => {
+      .then((winData) => {
         socket.emit('moveSuccess', move);
         socket.broadcast.emit('gameMove', move);
+
+        console.log(winData);
+
+        if(winData.winner) {
+          socket.emit('gameWon');
+          socket.broadcast.emit('gameOver');
+        }
       })
       .catch((err) => {
+        console.log(err);
         socket.emit('moveError', err.move);
       })
     }
